@@ -4,9 +4,7 @@ import lombok.Data;
 
 @Data
 public class UpdateTask {
-    public Integer id;
-    public Task task;
-
-
+    public String task;
+    public  Boolean isCompleted;
 
 }

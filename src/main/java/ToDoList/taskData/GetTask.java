@@ -6,10 +6,13 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class GetTask extends Task{
-    private Integer id;
-    private LocalDateTime isCreatedAt;
-    private LocalDateTime isUpdatedAt;
+public class GetTask {
+    public String task;
+    public Boolean isCompleted;
+    public LocalDateTime isCreatedAt;
+    public LocalDateTime isUpdatedAt;
+
+
 
 
 }
