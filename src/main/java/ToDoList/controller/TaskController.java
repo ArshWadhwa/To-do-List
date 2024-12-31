@@ -4,12 +4,15 @@ import ToDoList.entity.TaskEntity;
 import ToDoList.taskData.*;
 import ToDoList.taskData.db.TaskDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5501")
@@ -37,8 +40,7 @@ public class TaskController {
 
     }
     @GetMapping(
-            produces = {MediaType.APPLICATION_JSON_VALUE},
-            consumes = {MediaType.APPLICATION_JSON_VALUE}
+            produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public GetTaskResponse getTaskResponse(){
         List<TaskEntity> taskEntityList = taskDbRepository.findAll();
@@ -47,11 +49,13 @@ public class TaskController {
         List<GetTask> taskList = new ArrayList<>();
 
         taskEntityList.forEach(taskEntity ->{
+
             GetTask task = new GetTask();
+            task.setId(taskEntity.getId());
             task.setTask(taskEntity.getTask());
-            task.setTask(String.valueOf(taskEntity.getIsCompleted()));
-            task.setTask(String.valueOf(taskEntity.getCreatedAt()));
-            task.setTask(String.valueOf(taskEntity.getUpdatedAt()));
+            task.setIsCompleted(taskEntity.getIsCompleted());
+            task.setIsCreatedAt(taskEntity.getCreatedAt());
+            task.setIsUpdatedAt(taskEntity.getUpdatedAt());
             taskList.add(task);
 
         });
@@ -60,29 +64,35 @@ public class TaskController {
     }
 
     @PutMapping(
+            path = "{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public void editTask(@PathVariable("id") Long id,@RequestBody UpdateTask updateTask){
-        TaskEntity existingTask = taskDbRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
-
-        existingTask.setTask(updateTask.getTask());
-        existingTask.setIsCompleted(updateTask.getIsCompleted());
-        existingTask.setUpdatedAt(Instant.now());
-
-        taskDbRepository.save(existingTask);
+    public ResponseEntity<String> editTask(@PathVariable("id") Long id, @RequestBody UpdateTask updateTask) {
+        Optional<TaskEntity> taskEntityOptional = taskDbRepository.findById(id);
+        if (taskEntityOptional.isPresent()) {
+            taskDbRepository.updateTask(updateTask.getNewTask(),updateTask.getUpdatedIsCompleted(),id); // Save the updated task
+            return ResponseEntity.ok("Task updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found");
+        }
     }
 
 
     //Delete mapping
     @DeleteMapping(
-            path="/delete"
+            path="{id}"
     )
-    public void deleteTask(@PathVariable("id") Long id,@RequestBody DeleteTask deleteTask){
-        TaskEntity existingTask = taskDbRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with this id"));
-        taskDbRepository.delete(existingTask);
+    public ResponseEntity<String> deleteTask(@PathVariable("id") Long id){
+        Optional<TaskEntity> taskEntityOptional = taskDbRepository.findById(id);
+
+        if(taskEntityOptional.isPresent()){
+            TaskEntity taskEntity= taskEntityOptional.get();
+            taskDbRepository.delete(taskEntityOptional.get());
+            return ResponseEntity.ok("task deleted with ID: " +taskEntity.getId()+" successfully");
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Task not found with Id");
+        }
     }
 
 }

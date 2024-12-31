@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UpdateTask {
-    public String task;
-    public  Boolean isCompleted;
+    public String newTask;
+    public  Boolean updatedIsCompleted;
 
 }
