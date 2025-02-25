@@ -29,7 +29,7 @@ public class TaskController {
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
     public void AddTaskResponse (@RequestBody AddTaskRequest addTaskRequest) {
-        System.out.println("Add task Requested for id: " + addTaskRequest.getTask());
+
         TaskEntity task = new TaskEntity();
         task.setTask(addTaskRequest.getTask().getTask());
         task.setIsCompleted(addTaskRequest.getTask().getIsCompleted());

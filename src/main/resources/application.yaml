@@ -1,8 +1,16 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/todolist
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://dpg-cuuuk2a3esus73aein6g-a.oregon-postgres.render.com:5432/to_do_app_lle0
+    username: to_do_app_lle0_user
+    password: iZnQnXyI6B0snXRlObtLNQVoRy2B7ukZ
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
   port: 8080
