@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: to-do-list
+    runtime: java
+    buildCommand: "./gradlew build -x test"
+    startCommand: "java -jar build/libs/To-Do-List-1.0-SNAPSHOT.jar"
