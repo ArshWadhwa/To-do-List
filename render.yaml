@@ -1,6 +1,16 @@
 services:
   - type: web
     name: to-do-list
-    runtime: java
-    buildCommand: "./gradlew build -x test"
-    startCommand: "java -jar build/libs/To-Do-List-1.0-SNAPSHOT.jar"
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://dpg-cuuuk2a3esus73aein6g-a.oregon-postgres.render.com/to_do_app_lle0
+      - key: SPRING_DATASOURCE_USERNAME
+        value: to_do_app_lle0_user
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: your_postgres_password
+      - key: JAVA_OPTS
+        value: -Xmx512m
