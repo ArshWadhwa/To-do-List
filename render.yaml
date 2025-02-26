@@ -11,6 +11,6 @@ services:
       - key: SPRING_DATASOURCE_USERNAME
         value: to_do_app_lle0_user
       - key: SPRING_DATASOURCE_PASSWORD
-        value: your_postgres_password
+        value: iZnQnXyI6B0snXRlObtLNQVoRy2B7ukZ
       - key: JAVA_OPTS
         value: -Xmx512m
