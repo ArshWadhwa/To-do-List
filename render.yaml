@@ -4,13 +4,12 @@ services:
     env: docker
     plan: free
     region: oregon
-    dockerfilePath: ./Dockerfile
     envVars:
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://dpg-cuuuk2a3esus73aein6g-a.oregon-postgres.render.com/to_do_app_lle0
+        sync: false
       - key: SPRING_DATASOURCE_USERNAME
-        value: to_do_app_lle0_user
+        sync: false
       - key: SPRING_DATASOURCE_PASSWORD
-        value: iZnQnXyI6B0snXRlObtLNQVoRy2B7ukZ
+        sync: false
       - key: JAVA_OPTS
         value: -Xmx512m
