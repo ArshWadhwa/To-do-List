@@ -1,5 +1,7 @@
 # Use OpenJDK 17 as the base image
-FROM openjdk:17-jdk-slim
+# Use Java 22 (compatible with your compiled code)
+FROM eclipse-temurin:22-jdk
+
 
 # Set the working directory inside the container
 WORKDIR /app
