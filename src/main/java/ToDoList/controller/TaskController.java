@@ -28,7 +28,7 @@ public class TaskController {
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public void AddTaskResponse (@RequestBody AddTaskRequest addTaskRequest) {
+    public String AddTaskResponse (@RequestBody AddTaskRequest addTaskRequest) {
 
         TaskEntity task = new TaskEntity();
         task.setTask(addTaskRequest.getTask().getTask());
@@ -37,6 +37,7 @@ public class TaskController {
         task.setCreatedAt(Instant.now());
         taskDbRepository.save(task);
 
+        return "Task added ";
 
     }
     @GetMapping(
