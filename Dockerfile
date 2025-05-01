@@ -1,17 +1,12 @@
-# Use OpenJDK 17 as the base image
-# Use Java 22 (compatible with your compiled code)
-FROM eclipse-temurin:22-jdk
-
-
-# Set the working directory inside the container
+# Stage 1: Build the JAR using Gradle
+FROM gradle:8.6-jdk22 AS build
 WORKDIR /app
+COPY . .
+RUN gradle build --no-daemon  # This generates the JAR in /app/build/libs/
 
-# Copy the built JAR file from the host machine into the container
-COPY build/libs/To-Do-List-1.0-SNAPSHOT.jar app.jar
-
-
-# Expose the port 8080
+# Stage 2: Run the JAR
+FROM eclipse-temurin:22-jdk
+WORKDIR /app
+COPY --from=build /app/build/libs/To-Do-List-1.0-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# Command to run the JAR file
 ENTRYPOINT ["java", "-jar", "app.jar"]
