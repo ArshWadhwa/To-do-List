@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/customer
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://dpg-d09k6u8gjchc73963gm0-a.oregon-postgres.render.com:5432/to_do_project_jsje?sslmode=require
+    username: to_do_project_jsje_user
+    password: 0R8ydU6B8s4z8D3Aj025GOVthOCk7ffG
 
   jpa:
     hibernate:
