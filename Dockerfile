@@ -1,5 +1,5 @@
-# Stage 1: Build the JAR using Gradle
-FROM gradle:8.6-jdk22 AS build
+# Stage 1: Build the JAR using Gradle with JDK 22
+FROM gradle:jdk22 AS build
 WORKDIR /app
 COPY . .
 RUN gradle build --no-daemon  # This generates the JAR in /app/build/libs/
